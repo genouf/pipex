@@ -6,7 +6,7 @@
 #    By: genouf <genouf@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 22:28:16 by genouf            #+#    #+#              #
-#    Updated: 2022/06/10 17:08:59 by genouf           ###   ########.fr        #
+#    Updated: 2022/06/11 11:29:34 by genouf           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ NAME = pipex
 RM = rm -f
 
 CC = gcc
-CLFAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 
 MAKE = make -C libft
 LIBA = libft/libft.a

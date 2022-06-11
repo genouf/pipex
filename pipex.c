@@ -6,54 +6,54 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:09:10 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/10 22:36:38 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/11 18:27:19 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	main(int argc, char **argv)
+/*char *test_path(char **str, char *cmd)
 {
-	int	pfd[2];
-	int	pid;
-	char *args_l[] = {"ls", (char *)0};
-	char *env_args_l[] = { (char *)0};
-	char *args_w[] = {"wc", (char *)0};
-	char *env_args_w[] = { (char *)0};
+	char	*tmp;
+	int		i;
 	
+	i = 0;
+	while (str[i])
+	{
+		
+	}
+}*/
+
+int	main(int argc, char **argv, char **env)
+{
+	int	i;
+	char	**str;
+	char	*tmp;
 
 	(void)argc;
 	(void)argv;
-	/* init du pipe */
-	if (pipe(pfd) == -1)
+	i = 0;
+	while (env[i])
 	{
-		ft_printf("pipe failed\n");
-		return (1);
+		if (strncmp(env[i], "PATH", 4) == 0)
+		{
+			str = ft_split(env[i], ':');
+			str[0] = ft_strtrim(str[0], "PATH=");
+		}
+		i++;
 	}
-	/* init du child */
-	if ((pid = fork()) < 0)
+	i = 0;
+	while (str[i])
 	{
-		ft_printf("fork failed\n");
-		return (2);
+		tmp = str[i];
+		str[i] = ft_strjoin(str[i], "/");
+		free(tmp);
+		ft_printf("%s\n", str[i]);
+		i++;
 	}
-	/* process du child */
-	if (pid == 0)
-	{
-		close(pfd[1]);
-		dup2(pfd[0], 0);
-		close(pfd[0]);
-		execve(args_w[0], args_w, env_args_w);
-		ft_printf("wc failed");
-		return (3);
-	}
-	else
-	{
-		close(pfd[0]);
-		dup2(pfd[1], 1);
-		close(pfd[1]);
-		execve(args_l[0], args_l, env_args_l);
-		ft_printf("ls failed");
-		return (4);
-	}
+	i = -1;
+	while (str[++i])
+		free(str[i]);
+	free(str);
 	return (0);
 }

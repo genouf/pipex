@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:09:13 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/10 21:17:03 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/11 18:08:20 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PIPEX_H
 
 /*		INCLUDE		*/
-#include <memory.h>
 #include <unistd.h>
 #include "libft/libft.h"
 
