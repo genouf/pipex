@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:09:13 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/11 18:08:20 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/12 17:52:55 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include "libft/libft.h"
 
-/*		PROTOTYPE		*/
+/*		FIND_PATH		*/
+char	*find_path(char **env, char *cmd);
 
 #endif
