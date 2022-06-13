@@ -6,55 +6,51 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 17:51:56 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/12 18:21:17 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/14 00:40:40 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex.h"
 
+void	init_data_fd(t_data_fd *data, char *argv)
+{
+	if (access(argv[1], F_OK) != 0)
+	{
+		ft_putstr_fd("Error\nThe path of file1 is wrong !\n", 1);
+		exit(EXIT_FAILURE);
+	}
+	if (access(argv[1], R_OK) != 0)
+	{
+		ft_putstr_fd("Error\nYou don't have correct access !\n", 1);
+		exit(EXIT_FAILURE);
+	}
+	if (access(argv[1], R_OK | F_OK) == 0)
+		data->file1 = open(argv[1], O_RDONLY, )
+
+		
+}
+
 int	main(int argc, char **argv, char **env)
 {
-	int		pfd[2];
-	int		pid;
-	char	*path;
-	char 	**args;
+	t_data_fd	data;
 
-	(void)argc;
-	if (pipe(pfd) == -1)
+	(void)argv;
+	if (argc == 5 && env != NULL)
 	{
-		ft_printf("pipe failed\n");
-		return (1);
-	}
-	if ((pid = fork()) < 0)
-	{
-		ft_printf("fork failed\n");
-		return (2);
-	}
-	if (pid == 0)
-	{
-		close(pfd[1]);
-		dup2(pfd[0], 0);
-		close(pfd[0]);
-		args = ft_split(argv[3], ' ');
-		path = find_path(env, args[0]);
-		execve(path, args, env);
-		free(path);
-		free(args);
-		ft_printf(("ls failed"));
-		return (3);		
+		
 	}
 	else
 	{
-		close(pfd[0]);
-		dup2(pfd[1], 1);
-		close(pfd[1]);
-		args = ft_split(argv[1], ' ');
-		path = find_path(env, args[0]);
-		execve(path, args, env);
-		free(path);
-		free(args);
-		ft_printf("wc failed");
-		return (4);
+		if (env == NULL)
+		{
+			ft_putstr_fd("Error\nEnvironment error !\n", 1);
+			exit(EXIT_FAILURE);
+		}
+		else
+		{
+			ft_putstr_fd("Error\nWrong number of arguments !\n", 1);
+			exit(EXIT_FAILURE);
+		}
 	}
 	return (0);
 }
