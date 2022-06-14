@@ -6,12 +6,13 @@
 #    By: genouf <genouf@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 22:28:16 by genouf            #+#    #+#              #
-#    Updated: 2022/06/12 17:53:34 by genouf           ###   ########.fr        #
+#    Updated: 2022/06/14 12:55:01 by genouf           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = 	sources/pipex.c				\
 		sources/find_path.c			\
+		sources/utils.c				\
 		
 OBJS = ${SRCS:.c=.o}
 

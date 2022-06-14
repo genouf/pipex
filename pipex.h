@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:09:13 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/14 00:46:41 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/14 12:54:38 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,25 @@
 
 /*		INCLUDE		*/
 #include <unistd.h>
+#include <fcntl.h>
 #include "libft/libft.h"
+#include <sys/types.h>
+#include <sys/wait.h>
 
-typedef struct s_data_fd {
-	int	stdout;
-	int	file1;
-	int	file2;
-}				t_data_fd;
+typedef struct s_data {
+	int		stdout_fd;
+	int		file1;
+	int		file2;
+	char	*path1;
+	char	**cmd1;
+	char	*path2;
+	char	**cmd2;
+}				t_data;
 
 /*		FIND_PATH		*/
 char	*find_path(char **env, char *cmd);
 /*		UTILS			*/
-void	print_error(char *reason, int fd);
+void	print_error(t_data *data, char *reason, int fd, int mode);
+void	free_split(char **str);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:09:10 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/12 17:52:05 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/14 12:21:34 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,6 @@ static void	add_slash(char ***str)
 	}
 }
 
-static void	free_env_p(char **env_p)
-{
-	int	i;
-
-	i = 0;
-	while (env_p[i])
-	{
-		free(env_p[i]);
-		i++;
-	}
-	free(env_p);
-}
-
 char	*find_path(char **env, char *cmd)
 {
 	int		i;
@@ -77,6 +64,6 @@ char	*find_path(char **env, char *cmd)
 	}
 	add_slash(&env_p);
 	tmp = test_path(env_p, cmd);
-	free_env_p(env_p);
+	free_split(env_p);
 	return (tmp);
 }
