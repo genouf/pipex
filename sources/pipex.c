@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 17:51:56 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/15 10:43:13 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/15 10:59:14 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,39 @@ void	init_data_fd(t_data *data, char **argv)
 	data->stdout_fd = dup(1);
 }
 
-void	init_cmd_path(t_data *data, char **env, char **argv)
+void	child(t_data *data, int *pfd, char **env)
 {
-	data->cmd1 = ft_split(argv[2], ' ');
-	data->cmd2 = ft_split(argv[3], ' ');
-	data->path1 = find_path(env, data->cmd1[0]);
-	if (data->path1 == NULL)
-	{
-		free_split(data->cmd1);
-		free_split(data->cmd2);
-		print_error(data, "Error\nBad command1 !\n", 1, 0);
-	}
-	data->path2 = find_path(env, data->cmd2[0]);
-	if (data->path2 == NULL)
-	{
-		free_split(data->cmd1);
-		free_split(data->cmd2);
-		free(data->path1);
-		print_error(data, "Error\nBad command2 !\n", 1, 0);
-	}
+	int	check1;
+	int	check2;
+
+	check1 = dup2(data->file1, STDIN_FILENO);
+	check2 = dup2(pfd[1], STDOUT_FILENO);
+	if (check1 == -1 || check2 == -1)
+		print_error(data, "Error\nDup failed !\n", 1, 1);
+	check1 = close(pfd[0]);
+	check2 = close(pfd[1]);
+	if (check1 == -1 || check2 == -1)
+		print_error(data, "Error\nPipe close failed !\n", 1, 1);
+	execve(data->path1, data->cmd1, env);
+	print_error(data, "Error\nCommand1 failed !\n", 1, 1);
+}
+
+void	parent(t_data *data, int *pfd, char **env)
+{
+	int	check1;
+	int	check2;
+
+	check1 = dup2(pfd[0], STDIN_FILENO);
+	check2 = dup2(data->file2, STDOUT_FILENO);
+	if (check1 == -1 || check2 == -1)
+		print_error(data, "Error\nDup failed !\n", 1, 1);
+	check1 = close(pfd[1]);
+	check2 = close(pfd[0]);
+	if (check1 == -1 || check2 == -1)
+		print_error(data, "Error\nPipe close failed !\n", 1, 1);
+	execve(data->path2, data->cmd2, env);
+	print_error(data, "Error\nCommand2 failed !\n", 1, 1);
+	wait(NULL);
 }
 
 void	pipex(t_data *data, char **env)
@@ -73,22 +87,9 @@ void	pipex(t_data *data, char **env)
 	if (pid < 0)
 		print_error(data, "Error\nFork failed !\n", 1, 1);
 	if (pid == 0)
-	{
-		dup2(data->file1, STDIN_FILENO);
-		dup2(pfd[1], STDOUT_FILENO);
-		close(pfd[0]);
-		close(pfd[1]);
-		execve(data->path1, data->cmd1, env);
-	}
+		child(data, pfd, env);
 	else
-	{
-		dup2(pfd[0], STDIN_FILENO);
-		dup2(data->file2, STDOUT_FILENO);
-		close(pfd[1]);
-		close(pfd[0]);
-		execve(data->path2, data->cmd2, env);
-		wait(NULL);
-	}
+		parent(data, pfd, env);
 }
 
 int	main(int argc, char **argv, char **env)
