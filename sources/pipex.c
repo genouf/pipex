@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 17:51:56 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/15 17:34:00 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/15 18:14:53 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc == 5)
 	{
+		handle_path(&data, env, argv);
 		init_data_fd(&data, argv);
-		init_cmd_path(&data, env, argv);
 		pipex(&data, env);
 	}
 	else
