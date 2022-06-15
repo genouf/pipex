@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 17:51:56 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/15 11:25:13 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/15 17:34:00 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	main(int argc, char **argv, char **env)
 {
 	t_data	data;
 
-	if (argc == 5 && env != NULL)
+	if (argc == 5)
 	{
 		init_data_fd(&data, argv);
 		init_cmd_path(&data, env, argv);
@@ -105,16 +105,8 @@ int	main(int argc, char **argv, char **env)
 	}
 	else
 	{
-		if (env == NULL)
-		{
-			ft_putstr_fd("Error\nEnvironment error !\n", 1);
-			exit(EXIT_FAILURE);
-		}
-		else
-		{
-			ft_putstr_fd("Error\nWrong number of arguments !\n", 1);
-			exit(EXIT_FAILURE);
-		}
+		ft_putstr_fd("Error\nWrong number of arguments !\n", 1);
+		exit(EXIT_FAILURE);
 	}
 	return (0);
 }
