@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:09:13 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/14 12:54:38 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/15 10:43:47 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define PIPEX_H
 
 /*		INCLUDE		*/
-#include <unistd.h>
-#include <fcntl.h>
-#include "libft/libft.h"
-#include <sys/types.h>
-#include <sys/wait.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include "libft/libft.h"
+# include <sys/types.h>
+# include <sys/wait.h>
 
 typedef struct s_data {
 	int		stdout_fd;
