@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 17:51:56 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/15 10:59:14 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/15 11:25:13 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_data_fd(t_data *data, char **argv)
 	}
 	if (access(argv[4], F_OK) != 0)
 	{
-		data->file2 = open(argv[4], O_CREAT | O_WRONLY, 0644);
+		data->file2 = open(argv[4], O_CREAT | O_WRONLY, 0664);
 		if (data->file2 == -1)
 			print_error(data, "Error\nBad file descriptor !\n", 1, 0);
 	}
@@ -34,7 +34,7 @@ void	init_data_fd(t_data *data, char **argv)
 	{
 		if (access(argv[4], W_OK) != 0)
 			print_error(data, "Error\nIncorrect access to file2 !\n", 1, 0);
-		data->file2 = open(argv[4], O_TRUNC | O_WRONLY, 0644);
+		data->file2 = open(argv[4], O_TRUNC | O_WRONLY, 0664);
 		if (data->file2 == -1)
 			print_error(data, "Error\nBad file descriptor !\n", 1, 0);
 	}
@@ -90,6 +90,7 @@ void	pipex(t_data *data, char **env)
 		child(data, pfd, env);
 	else
 		parent(data, pfd, env);
+	free_path(data);
 }
 
 int	main(int argc, char **argv, char **env)
