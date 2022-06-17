@@ -6,7 +6,7 @@
 #    By: genouf <genouf@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 22:28:16 by genouf            #+#    #+#              #
-#    Updated: 2022/06/14 12:55:01 by genouf           ###   ########.fr        #
+#    Updated: 2022/06/17 17:10:44 by genouf           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,14 @@ SRCS = 	sources/pipex.c				\
 		
 OBJS = ${SRCS:.c=.o}
 
-INC =	pipex.h						\
+BONUS = sources/pipex_bonus.c 		\
+		sources/find_path_bonus.c 	\
+		sources/utils_bonus.c 		\
 		
+OBJS_BONUS = ${BONUS:.c=.o}
+
+INC =	pipex.h	
+
 NAME = pipex
 
 RM = rm -f
@@ -37,6 +43,11 @@ ${LIBA}:
 ${NAME}: ${OBJS} ${LIBA}
 		${CC} ${CFLAGS} -o $@ ${SRCS} ${LIB}
 
+bonus : pipex_bonus
+
+pipex_bonus : ${OBJS_BONUS} ${LIBA}
+		${CC} -g -o $@ ${OBJS_BONUS} ${LIB} 
+
 /%.o:	%.c
 		${CC} ${CFLAGS} -c $@ $<
 
@@ -47,12 +58,12 @@ fsa: ${OBJS} ${LIBA}
 		${CC} -fsanitize=address ${CFLAGS} -o $@ ${SRCS} ${LIB}
 
 clean:
-		${RM} ./${OBJS}
+		${RM} ./${OBJS} ./${OBJS_BONUS}
 		${MAKE} clean
 		@echo "cleaning .o files"
 
 fclean: clean
-		${RM} ${NAME}
+		${RM} ${NAME} pipex_bonus
 		${MAKE} fclean
 		
 re:		fclean all		

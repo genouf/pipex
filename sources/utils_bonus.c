@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 00:45:31 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/17 15:46:40 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/17 16:47:29 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex.h"
+#include "../pipex_bonus.h"
 
 void	free_split(char **str)
 {
@@ -25,44 +25,18 @@ void	free_split(char **str)
 	free(str);
 }
 
-void	free_path(t_data *data)
-{
-	free_split(data->cmd1);
-	free_split(data->cmd2);
-	free(data->path1);
-	free(data->path2);
-}
-
-void	print_error(t_data *data, char *reason, int fd, int mode)
+void	print_error(char *reason, int fd)
 {
 	if (errno)
 		perror(reason);
 	else
 		ft_putstr_fd(reason, fd);
-	if (mode == 0)
-		exit(EXIT_FAILURE);
-	else
-	{
-		free_path(data);
-		exit(EXIT_FAILURE);
-	}
+	exit(EXIT_FAILURE);
 }
 
-int	check_path_access(t_data *data, char *cmd, int *choice, int increment)
+void	free_exec(t_exec data_e)
 {
-	if (access(cmd, F_OK != 0))
-	{
-		if (strncmp(cmd, "./", 2) != 0)
-			*choice += increment;
-		else
-			return (-1);
-	}
-	else
-	{
-		if (increment == 1)
-			data->path1 = cmd;
-		if (increment == 2)
-			data->path2 = cmd;
-	}
-	return (0);
+	free_split(data_e.cmd);
+	if (data_e.free == 1)
+		free(data_e.path);
 }
