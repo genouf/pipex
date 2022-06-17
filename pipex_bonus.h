@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:09:13 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/17 16:36:54 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/17 19:33:45 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,7 @@ t_exec	init_exec(char **env, char *str);
 void	print_error(char *reason, int fd);
 void	free_split(char **str);
 void	free_exec(t_exec data_e);
+void	print_split(char **str);
+char	*find_path(char **env, char *cmd);
 
 #endif

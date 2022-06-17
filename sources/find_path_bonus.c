@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:09:10 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/17 16:46:54 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/17 20:29:35 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,12 @@ t_exec init_exec(char **env, char *str)
 	t_exec data_e;
 	
 	data_e.cmd = ft_split(str, ' ');
-	if (access(data_e.cmd[0], F_OK) != 0)
+	if (access((data_e.cmd)[0], F_OK) != 0)
 	{
-		if (ft_strncmp(data_e.cmd[0], "./", 2) != 0)
+		if (ft_strncmp((data_e.cmd)[0], "./", 2) != 0)
 		{
 			data_e.free = 1;
-			data_e.path = find_path(env, data_e.cmd[0]);
+			data_e.path = find_path(env, (data_e.cmd)[0]);
 		}
 		else
 		{
