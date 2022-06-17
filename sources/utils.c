@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 00:45:31 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/15 23:01:57 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/17 10:38:20 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ void	free_path(t_data *data)
 
 void	print_error(t_data *data, char *reason, int fd, int mode)
 {
-	if (mode == 0)
-	{
+	if (errno)
+		perror(reason);
+	else
 		ft_putstr_fd(reason, fd);
+	if (mode == 0)
 		exit(EXIT_FAILURE);
-	}
 	else
 	{
 		free_path(data);
-		ft_putstr_fd(reason, fd);
 		exit(EXIT_FAILURE);
 	}
 }

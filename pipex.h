@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:09:13 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/15 23:01:32 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/17 10:34:02 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 /*		INCLUDE		*/
 # include <unistd.h>
+# include <string.h>
+# include <errno.h>
 # include <fcntl.h>
 # include "libft/libft.h"
 # include <sys/types.h>
