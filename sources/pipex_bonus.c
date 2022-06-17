@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.c                                            :+:      :+:    :+:   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 17:51:56 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/17 10:57:19 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/17 12:34:09 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,36 +76,80 @@ void	parent(t_data *data, int *pfd, char **env)
 	wait(NULL);
 }
 
-void	pipex(t_data *data, char **env)
+void	pipex(t_data *data, char **env, int processes)
 {
-	int	pid;
-	int	pfd[2];
+	int pids[processes];
+	int	pipes[processes + 1][2];
+	int	i;
+	int	j;
+	int	x;
+	int y;
+	int check1;
+	int	check2;
 
-	if (pipe(pfd) == -1)
-		print_error(data, "Error\nPipe failed !\n", 1, 1);
-	pid = fork();
-	if (pid < 0)
-		print_error(data, "Error\nFork failed !\n", 1, 1);
-	if (pid == 0)
-		child(data, pfd, env);
-	else
-		parent(data, pfd, env);
-	free_path(data);
+	i = 0;
+	/* Creation des pipes */
+	while (i < processes + 1)
+	{
+		if (pipe(pipes[i]) == -1)
+			print_error(data, "Error\nPipe failed !\n", 1, 1);
+		i++;
+	}
+	/* Creation des processes */
+	i = 0;
+	while (i < processes)
+	{
+		pids[i] = fork();
+		if (pids[i] == -1)
+			print_error(data, "Error\nFork failed !\n", 1, 1);
+		/* Child process */
+		if (pids[i] == 0)
+		{
+			/* Fermeture des pipes que l'on n'utilise pas */
+			j = 0;
+			while (j < processes + 1)
+			{
+				if (i != j)
+					close(pipes[j][0]);
+				if (i + 1 != j)
+					close(pipes[j][1]);
+				j++;
+			}
+			check1 = dup2(pipes[i][0], 0);
+			check2 = dup2(pipes[i + 1][1], 1);
+			if (check1 == -1 || check2 == -1)
+				print_error(data, "Error\nDup failed !\n", 1, 1);
+			check1 = close(pipes[i][0]);
+			check2 = close(pipes[i + 1][0]);
+			if (check1 == -1 || check2 == -1)
+				print_error(data, "Error\nPipe close failed !\n", 1, 1);
+			execve()
+			return (0);
+		}
+		i++;
+	}
+	/* Main process */
+	y = 5;
+	
+	/* Wait processes */
+	i = -1;
+	while (++i < processes)
+		wait(NULL);
 }
 
 int	main(int argc, char **argv, char **env)
 {
 	t_data	data;
 
-	if (argc == 5)
+	if (argc < 5)
 	{
-		handle_path(&data, env, argv);
-		init_data_fd(&data, argv);
-		pipex(&data, env);
+		//handle_path(&data, env, argv);
+		//init_data_fd(&data, argv);
+		pipex(&data, env, argc - 3);
 	}
 	else
 	{
-		ft_putstr_fd("Error\nWrong number of arguments !\n", 1);
+		ft_putstr_fd("Error\nWrong number of arguments !\n", 2);
 		exit(EXIT_FAILURE);
 	}
 	return (0);
