@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:09:10 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/17 20:29:35 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/19 17:00:09 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*find_path(char **env, char *cmd)
 	}
 	add_slash(&env_p);
 	tmp = test_path(env_p, cmd);
-	free_split(env_p);
+	free_split((void **)env_p);
 	return (tmp);
 }
 
@@ -84,7 +84,7 @@ t_exec init_exec(char **env, char *str)
 		}
 		else
 		{
-			free_split(data_e.cmd);
+			free_split((void **)data_e.cmd);
 			print_error("Error\nThis cmd is not in rep local !\n", 2);
 		}
 	}
