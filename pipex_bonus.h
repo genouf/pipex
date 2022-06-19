@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:09:13 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/17 19:33:45 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/19 16:05:24 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,14 @@ typedef struct s_data_fd {
 t_exec	init_exec(char **env, char *str);
 /*		UTILS			*/
 void	print_error(char *reason, int fd);
-void	free_split(char **str);
+void	free_split(void **str);
 void	free_exec(t_exec data_e);
 void	print_split(char **str);
 char	*find_path(char **env, char *cmd);
+void	free_malloc_failed(void **str, int i);
+/*		PIPEX_TOOLS		*/
+void	init_pipes(int	***pipes, int processes);
+void	close_pipes_child(int ***pipes, int processes, int i);
+void	pipex_end(int **pipes, int *pids, int processes);
 
 #endif

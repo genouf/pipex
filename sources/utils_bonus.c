@@ -6,13 +6,13 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 00:45:31 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/17 20:31:09 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/19 15:14:43 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../pipex_bonus.h"
 
-void	free_split(char **str)
+void	free_split(void **str)
 {
 	int	i;
 
@@ -25,6 +25,23 @@ void	free_split(char **str)
 	free(str);
 }
 
+void	free_malloc_failed(void **str, int i)
+{
+	while (i > -1)
+	{
+		free(str[i]);
+		i--;
+	}
+	free(str);
+}
+
+void	free_exec(t_exec data_e)
+{
+	free_split((void **)data_e.cmd);
+	if (data_e.free == 1)
+		free(data_e.path);
+}
+
 void	print_error(char *reason, int fd)
 {
 	if (errno)
@@ -32,11 +49,4 @@ void	print_error(char *reason, int fd)
 	else
 		ft_putstr_fd(reason, fd);
 	exit(EXIT_FAILURE);
-}
-
-void	free_exec(t_exec data_e)
-{
-	free_split(data_e.cmd);
-	if (data_e.free == 1)
-		free(data_e.path);
 }

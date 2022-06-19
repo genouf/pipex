@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 17:51:56 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/17 20:35:57 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/19 16:05:52 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,72 @@ void	init_data_fd(t_data_fd *data, char **argv, int argc)
 	}
 }
 
-/*oid	process_dup(t_data_fd data, )*/
-
-int	pipex(t_data_fd data, char **env, int processes, char **argv)
+void	init_pipex_data(int processes, int ***pipes, int **pids)
 {
-	int 	pids[processes];
-	int		pipes[processes - 1][2];
-	int		i;
-	int		j;
-	int 	check1;
-	int		check2;
-	 t_exec	data_e;
-
-	i = 0;
-	while (i < processes - 1)
+	int i;
+	
+	*pids = (int *)malloc(sizeof(int) * processes);
+	if (*pids == NULL)
+		print_error("Error\nMalloc failed !\n", 2);
+	*pipes = (int **)malloc(sizeof(int) * (processes + 1));
+	if (*pipes == NULL)
 	{
-		if (pipe(pipes[i]) == -1)
-			print_error("Error\nPipe failed !\n", 2);
-		i++;
+		free(*pids);
+		print_error("Error\nMalloc failed !\n", 2);
 	}
 	i = 0;
 	while (i < processes)
+	{
+		(*pipes)[i] = (int *)malloc(sizeof(int) * 2);
+		if ((*pipes)[i] == NULL)
+		{
+			free_malloc_failed((void **)*pipes, i - 1);
+			free(*pids);
+			print_error("Error\nMalloc failed !\n", 2);
+		}
+		i++;
+	}
+	(*pipes)[i] = 0;
+}
+
+void	process_dup(t_data_fd data, int **pipes, int i, int processes)
+{
+	int	check1;
+	int	check2;
+
+	if (i == 0)
+		check1 = dup2(data.file1, STDIN_FILENO);
+	else
+		check1 = dup2(pipes[i - 1][0], STDIN_FILENO);
+	if (i == processes - 1)
+		check2 = dup2(data.file2, STDOUT_FILENO);
+	else
+		check2 = dup2(pipes[i][1], STDOUT_FILENO);
+	if (check1 == -1 || check2 == -1)
+		print_error("Error\nDup failed !\n", 2);
+	if (i == 0)
+		close(data.file1);
+	else
+		close(pipes[i - 1][0]);
+	if (i == processes - 1)
+		close(data.file2);
+	else
+		close(pipes[i][1]);
+	if (check1 == -1 || check2 == -1)
+		print_error("Error\nPipe close failed !\n", 2);
+}
+
+int	pipex(t_data_fd data, char **env, int processes, char **argv)
+{
+	int 	*pids;
+	int		**pipes;
+	int		i;
+	t_exec	data_e;
+
+	init_pipex_data(processes, &pipes, &pids);
+	init_pipes(&pipes, processes);
+	i = -1;
+	while (++i < processes)
 	{
 		pids[i] = fork();
 		if (pids[i] == -1)
@@ -68,51 +113,14 @@ int	pipex(t_data_fd data, char **env, int processes, char **argv)
 		data_e = init_exec(env, argv[i + 2]);
 		if (pids[i] == 0)
 		{
-			j = 0;
-			while (j < processes - 1)
-			{
-				if (i - 1 != j)
-					close(pipes[j][0]);
-				if (i != j)
-					close(pipes[j][1]);
-				j++;
-			}
-			if (i == 0)
-				check1 = dup2(data.file1, STDIN_FILENO);
-			else
-				check1 = dup2(pipes[i - 1][0], STDIN_FILENO);
-			if (i == processes - 1)
-				check2 = dup2(data.file2, STDOUT_FILENO);
-			else
-				check2 = dup2(pipes[i][1], STDOUT_FILENO);
-			if (check1 == -1 || check2 == -1)
-				print_error("Error\nDup failed !\n", 2);
-			if (i == 0)
-				close(data.file1);
-			else
-				close(pipes[i - 1][0]);
-			if (i == processes -1)
-				close(data.file2);
-			else
-				close(pipes[i][1]);
-			if (check1 == -1 || check2 == -1)
-				print_error("Error\nPipe close failed !\n", 2);
+			close_pipes_child(&pipes, processes, i);
+			process_dup(data, pipes, i, processes);
 			execve(data_e.path, data_e.cmd, env);
 			print_error("Error\nCommand Exec failed !\n", 2);
 		}
 		free_exec(data_e);
-		i++;
 	}
-	j = 0;
-	while (j < processes - 1)
-	{
-		close(pipes[j][0]);
-		close(pipes[j][1]);
-		j++;
-	}
-	i = -1;
-	while (++i < processes)
-		wait(NULL);
+	pipex_end(pipes, pids, processes);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 #    By: genouf <genouf@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 22:28:16 by genouf            #+#    #+#              #
-#    Updated: 2022/06/17 17:10:44 by genouf           ###   ########.fr        #
+#    Updated: 2022/06/19 15:56:48 by genouf           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ OBJS = ${SRCS:.c=.o}
 BONUS = sources/pipex_bonus.c 		\
 		sources/find_path_bonus.c 	\
 		sources/utils_bonus.c 		\
+		sources/pipex_tools_bonus.c \
 		
 OBJS_BONUS = ${BONUS:.c=.o}
 
