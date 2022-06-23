@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:47:46 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/23 18:12:37 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/23 18:37:43 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,15 @@ char *str_query(char *limiter)
 	free(limiter);
 	free(tmp);
 	return (result);
+}
+
+void	heredoc(char *limiter)
+{
+	int pipes[2][2];
+	int pids;
+	char *entry;
+
+	entry = str_query(limiter);
+		
+	
 }
