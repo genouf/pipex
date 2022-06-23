@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 17:51:56 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/23 18:11:46 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/23 21:52:49 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	init_pipex_data(int processes, int ***pipes, int **pids)
 		}
 		i++;
 	}
-	(*pipes)[i] = '\0';
+	(*pipes)[i] = 0;
 }
 
 void	process_dup(t_data_fd data, int **pipes, int i, int processes)
