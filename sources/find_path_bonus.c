@@ -6,11 +6,11 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:09:10 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/23 13:36:05 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/23 17:11:27 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex_bonus.h"
+#include "../includes/pipex_bonus.h"
 
 static char	*test_path(char **str, char *cmd)
 {

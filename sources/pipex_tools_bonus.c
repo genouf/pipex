@@ -6,11 +6,11 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:31:22 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/23 16:29:43 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/23 17:12:56 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex_bonus.h"
+#include "../includes/pipex_bonus.h"
 
 void	init_pipes(int	***pipes, int processes, t_data_pip *data)
 {

@@ -6,11 +6,11 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 00:45:31 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/17 15:46:40 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/23 17:13:12 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex.h"
+#include "../includes/pipex.h"
 
 void	free_split(char **str)
 {

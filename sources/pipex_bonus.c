@@ -6,11 +6,11 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 17:51:56 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/23 16:30:07 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/23 18:11:46 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../pipex_bonus.h"
+#include "../includes/pipex_bonus.h"
 
 void	init_data_fd(t_data_fd *data, char **argv, int argc)
 {
@@ -100,7 +100,7 @@ int	pipex(t_data_pip *data, char **env, int processes, char **argv)
 	int		i;
 
 	init_pipex_data(processes, &data->pipes, &data->pids);
-	init_pipes(&data->pipes, processes);
+	init_pipes(&data->pipes, processes, data);
 	i = -1;
 	while (++i < processes)
 	{
@@ -126,9 +126,17 @@ int	pipex(t_data_pip *data, char **env, int processes, char **argv)
 int	main(int argc, char **argv, char **env)
 {
 	t_data_pip	data;
+	char	*str;
 
 	if (argc > 4)
 	{
+		if (ft_strncmp(argv[1], "here_doc", 8) == 0)
+		{
+			str = str_query(argv[2]);
+			ft_printf("result : %s", str);
+			free(str);
+			exit(0);
+		}
 		init_data_fd(&data.data_fd, argv, argc);
 		pipex(&data, env, argc - 3, argv);
 	}

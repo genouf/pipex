@@ -6,7 +6,7 @@
 #    By: genouf <genouf@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 22:28:16 by genouf            #+#    #+#              #
-#    Updated: 2022/06/19 15:56:48 by genouf           ###   ########.fr        #
+#    Updated: 2022/06/23 17:50:49 by genouf           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,10 +20,14 @@ BONUS = sources/pipex_bonus.c 		\
 		sources/find_path_bonus.c 	\
 		sources/utils_bonus.c 		\
 		sources/pipex_tools_bonus.c \
+		sources/here_doc_bonus.c	\
+		gnl/get_next_line.c			\
+		gnl/get_next_line_utils.c	\
 		
 OBJS_BONUS = ${BONUS:.c=.o}
-
-INC =	pipex.h	
+		
+INC =	includes/pipex.h						\
+		includes/get_next_line.h				\
 
 NAME = pipex
 
