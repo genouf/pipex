@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:09:13 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/23 13:29:02 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/23 14:38:09 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	free_malloc_failed(void **str, int i);
 /*		PIPEX_TOOLS		*/
 void	init_pipes(int	***pipes, int processes);
 void	close_pipes_child(int ***pipes, int processes, int i);
-void	pipex_end(int **pipes, int *pids, int processes);
+void	pipex_end(int **pipes, int *pids, int processes, t_data_pip *data);
+void	free_pp(int **pipes, int *pids);
 
 #endif

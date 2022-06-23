@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 17:51:56 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/23 13:33:48 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/23 14:37:34 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,14 @@ int	pipex(t_data_pip *data, char **env, int processes, char **argv)
 		{
 			close_pipes_child(&data->pipes, processes, i);
 			process_dup(data->data_fd, data->pipes, i, processes);
+			free_pp(data->pipes, data->pids);
 			execve(data->data_e.path, data->data_e.cmd, env);
+			free_exec(data->data_e);
 			print_error("Error\nCommand Exec failed !\n", 2);
 		}
 		free_exec(data->data_e);
 	}
-	pipex_end(data->pipes, data->pids, processes);
+	pipex_end(data->pipes, data->pids, processes, data);
 	return (0);
 }
 

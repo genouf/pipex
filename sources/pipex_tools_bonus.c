@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:31:22 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/23 13:33:55 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/23 14:37:31 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,13 @@ void	close_pipes_child(int ***pipes, int processes, int i)
 	}
 }
 
-void	pipex_end(int **pipes, int *pids, int processes)
+void	free_pp(int **pipes, int *pids)
+{
+	free(pids);
+	free_split((void **)pipes);
+}
+
+void	pipex_end(int **pipes, int *pids, int processes, t_data_pip *data)
 {
 	int	j;
 	int	i;
@@ -55,6 +61,7 @@ void	pipex_end(int **pipes, int *pids, int processes)
 	i = -1;
 	while (++i < processes)
 		wait(NULL);
-	free(pids);
-	free_split((void **)pipes);
+	free_pp(pipes, pids);
+	close(data->data_fd.file1);
+	close(data->data_fd.file2);
 }
