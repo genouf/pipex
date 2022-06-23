@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 17:51:56 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/23 14:37:34 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/23 15:17:24 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	init_pipex_data(int processes, int ***pipes, int **pids)
 	*pids = (int *)malloc(sizeof(int) * processes);
 	if (*pids == NULL)
 		print_error("Error\nMalloc failed !\n", 2);
-	*pipes = (int **)malloc(sizeof(int) * (processes + 1));
+	*pipes = (int **)malloc(sizeof(int *) * (processes + 1));
 	if (*pipes == NULL)
 	{
 		free(*pids);
@@ -65,7 +65,7 @@ void	init_pipex_data(int processes, int ***pipes, int **pids)
 		}
 		i++;
 	}
-	(*pipes)[i] = 0;
+	(*pipes)[i] = '\0';
 }
 
 void	process_dup(t_data_fd data, int **pipes, int i, int processes)
