@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 00:45:31 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/19 15:14:43 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/23 16:32:36 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,15 @@ void	print_error(char *reason, int fd)
 		perror(reason);
 	else
 		ft_putstr_fd(reason, fd);
+	exit(EXIT_FAILURE);
+}
+
+void	print_error_free(char *reason, int fd, t_data_pip *data)
+{
+	if (errno)
+		perror(reason);
+	else
+		ft_putstr_fd(reason, fd);
+	free_pp(data->pipes, data->pids);
 	exit(EXIT_FAILURE);
 }

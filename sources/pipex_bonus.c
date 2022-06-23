@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 17:51:56 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/23 15:17:24 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/23 16:30:07 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	pipex(t_data_pip *data, char **env, int processes, char **argv)
 	{
 		data->pids[i] = fork();
 		if (data->pids[i] == -1)
-			print_error("Error\nFork failed !\n", 2);
+			print_error_free("Error\nFork failed !\n", 2, data);
 		data->data_e = init_exec(env, argv[i + 2]);
 		if (data->pids[i] == 0)
 		{
