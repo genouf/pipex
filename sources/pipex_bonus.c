@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 17:51:56 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/19 16:05:52 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/23 13:33:48 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	init_data_fd(t_data_fd *data, char **argv, int argc)
 
 void	init_pipex_data(int processes, int ***pipes, int **pids)
 {
-	int i;
-	
+	int	i;
+
 	*pids = (int *)malloc(sizeof(int) * processes);
 	if (*pids == NULL)
 		print_error("Error\nMalloc failed !\n", 2);
@@ -95,43 +95,40 @@ void	process_dup(t_data_fd data, int **pipes, int i, int processes)
 		print_error("Error\nPipe close failed !\n", 2);
 }
 
-int	pipex(t_data_fd data, char **env, int processes, char **argv)
+int	pipex(t_data_pip *data, char **env, int processes, char **argv)
 {
-	int 	*pids;
-	int		**pipes;
 	int		i;
-	t_exec	data_e;
 
-	init_pipex_data(processes, &pipes, &pids);
-	init_pipes(&pipes, processes);
+	init_pipex_data(processes, &data->pipes, &data->pids);
+	init_pipes(&data->pipes, processes);
 	i = -1;
 	while (++i < processes)
 	{
-		pids[i] = fork();
-		if (pids[i] == -1)
+		data->pids[i] = fork();
+		if (data->pids[i] == -1)
 			print_error("Error\nFork failed !\n", 2);
-		data_e = init_exec(env, argv[i + 2]);
-		if (pids[i] == 0)
+		data->data_e = init_exec(env, argv[i + 2]);
+		if (data->pids[i] == 0)
 		{
-			close_pipes_child(&pipes, processes, i);
-			process_dup(data, pipes, i, processes);
-			execve(data_e.path, data_e.cmd, env);
+			close_pipes_child(&data->pipes, processes, i);
+			process_dup(data->data_fd, data->pipes, i, processes);
+			execve(data->data_e.path, data->data_e.cmd, env);
 			print_error("Error\nCommand Exec failed !\n", 2);
 		}
-		free_exec(data_e);
+		free_exec(data->data_e);
 	}
-	pipex_end(pipes, pids, processes);
+	pipex_end(data->pipes, data->pids, processes);
 	return (0);
 }
 
 int	main(int argc, char **argv, char **env)
 {
-	t_data_fd	data;
-	
+	t_data_pip	data;
+
 	if (argc > 4)
 	{
-		init_data_fd(&data, argv, argc);
-		pipex(data, env, argc - 3, argv);
+		init_data_fd(&data.data_fd, argv, argc);
+		pipex(&data, env, argc - 3, argv);
 	}
 	else
 	{

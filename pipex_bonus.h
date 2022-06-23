@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:09:13 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/19 16:05:24 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/23 13:29:02 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ typedef struct s_data_fd {
 	int		file1;
 	int		file2;
 }				t_data_fd;
+
+typedef struct s_data_pip {
+	int	*pids;
+	int	**pipes;
+	t_exec data_e;
+	t_data_fd data_fd;
+}				t_data_pip;
 
 /*		FIND_PATH		*/
 t_exec	init_exec(char **env, char *str);
