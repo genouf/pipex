@@ -6,7 +6,7 @@
 #    By: genouf <genouf@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 22:28:16 by genouf            #+#    #+#              #
-#    Updated: 2022/06/24 12:54:42 by genouf           ###   ########.fr        #
+#    Updated: 2022/06/24 13:05:39 by genouf           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ BONUS = sources/pipex_bonus.c 		\
 		sources/utils_bonus.c 		\
 		sources/pipex_tools_bonus.c \
 		sources/here_doc_bonus.c	\
+		sources/here_doc_bis_bonus.c\
 		gnl/get_next_line.c			\
 		gnl/get_next_line_utils.c	\
 		
