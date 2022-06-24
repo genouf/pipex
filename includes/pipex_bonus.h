@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:09:13 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/23 17:49:58 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/24 11:09:07 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,6 @@ void	close_pipes_child(int ***pipes, int processes, int i);
 void	pipex_end(int **pipes, int *pids, int processes, t_data_pip *data);
 void	free_pp(int **pipes, int *pids);
 /*		HERE_DOC		*/
-char 	*str_query(char *limiter);
+int		heredoc(char *limiter, char **env, char **argv, int argc);
 
 #endif

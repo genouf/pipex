@@ -6,11 +6,32 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:47:46 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/23 22:54:09 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/24 11:14:43 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex_bonus.h"
+
+void	init_heredoc_fd(char **argv, int *fd, int argc)
+{
+	int	index;
+
+	index = argc - 1;
+	if (access(argv[index], F_OK) != 0)
+	{
+		*fd = open(argv[index], O_CREAT | O_WRONLY, 0664);
+		if (*fd == -1)
+			print_error("Error\nBad file descriptor !\n", 2);
+	}
+	else
+	{
+		if (access(argv[index], W_OK) != 0)
+			print_error("Error\nIncorrect access to heredoc file !\n", 2);
+		*fd = open(argv[index], O_APPEND | O_WRONLY, 0664);
+		if (*fd == -1)
+			print_error("Error\nBad file descriptor !\n", 2);
+	}
+}
 
 char *str_query(char *limiter)
 {
@@ -26,7 +47,6 @@ char *str_query(char *limiter)
 	{
 		tmp2 = result;
 		result = ft_strjoin(result, tmp);
-		ft_printf("resultin:%s", result);
 		free(tmp2);
 		free(tmp);
 		ft_printf("heredoc> ");
@@ -37,13 +57,17 @@ char *str_query(char *limiter)
 	return (result);
 }
 
-void	heredoc(char *limiter, char **env, char **argv)
+int	heredoc(char *limiter, char **env, char **argv, int argc)
 {
 	int 	pipes[2][2];
 	int 	pids;
 	char 	*entry;
+	int		fd;
 	t_exec	data_e;
 
+	init_heredoc_fd(argv, &fd, argc);
+	pipe(pipes[0]);
+	pipe(pipes[1]);
 	entry = str_query(limiter);
 	write(pipes[0][1], entry, ft_strlen(entry));
 	free(entry);
@@ -63,7 +87,16 @@ void	heredoc(char *limiter, char **env, char **argv)
 		free_exec(data_e);
 		print_error("Error\nCommand Exec failed !\n", 2);		
 	}
-	p
 	dup2(pipes[1][0], STDIN_FILENO);
-	dup2()
+	dup2(fd, STDOUT_FILENO);
+	close(pipes[0][0]);
+	close(pipes[1][1]);
+	close(pipes[0][1]);
+	close(pipes[1][0]);
+	data_e = init_exec(env, argv[4]);
+	execve(data_e.path, data_e.cmd, env);
+	free_exec(data_e);
+	print_error("Error\nCommand Exec failed !\n", 2);
+	wait(NULL);
+	return (0);
 }
