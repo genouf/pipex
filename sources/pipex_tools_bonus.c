@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:31:22 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/23 17:12:56 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/24 12:54:21 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,20 @@ void	init_pipes(int	***pipes, int processes, t_data_pip *data)
 void	close_pipes_child(int ***pipes, int processes, int i)
 {
 	int	j;
+	int	check1;
+	int check2;
 
 	j = 0;
 	while (j < processes - 1)
 	{
+		check1 = 0;
+		check2 = 0;
 		if (i - 1 != j)
-			close((*pipes)[j][0]);
+			check1 = close((*pipes)[j][0]);
 		if (i != j)
-			close((*pipes)[j][1]);
+			check2 = close((*pipes)[j][1]);
+		if (check1 == -1 || check2 == -1)
+			print_error("Error\nClose failed !\n", 2);
 		j++;
 	}
 }

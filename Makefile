@@ -6,7 +6,7 @@
 #    By: genouf <genouf@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 22:28:16 by genouf            #+#    #+#              #
-#    Updated: 2022/06/23 17:50:49 by genouf           ###   ########.fr        #
+#    Updated: 2022/06/24 12:54:42 by genouf           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,4 +71,4 @@ fclean: clean
 		${RM} ${NAME} pipex_bonus
 		${MAKE} fclean
 		
-re:		fclean all		
+re:		fclean all

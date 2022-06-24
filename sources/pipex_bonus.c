@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 17:51:56 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/24 11:08:43 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/24 12:48:11 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,13 @@ void	process_dup(t_data_fd data, int **pipes, int i, int processes)
 	if (check1 == -1 || check2 == -1)
 		print_error("Error\nDup failed !\n", 2);
 	if (i == 0)
-		close(data.file1);
+		check1 = close(data.file1);
 	else
-		close(pipes[i - 1][0]);
+		check1 = close(pipes[i - 1][0]);
 	if (i == processes - 1)
-		close(data.file2);
+		check2 = close(data.file2);
 	else
-		close(pipes[i][1]);
+		check2 = close(pipes[i][1]);
 	if (check1 == -1 || check2 == -1)
 		print_error("Error\nPipe close failed !\n", 2);
 }
