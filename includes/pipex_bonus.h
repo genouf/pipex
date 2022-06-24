@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:09:13 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/24 11:09:07 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/24 12:05:26 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ typedef struct s_data_pip {
 	t_exec		data_e;
 	t_data_fd	data_fd;
 }				t_data_pip;
+
+typedef struct s_heredoc {
+	int		pipes[2][2];
+	int		pids;
+	int		fd;
+	t_exec	data_e;
+}				t_heredoc;
 
 /*		FIND_PATH		*/
 t_exec	init_exec(char **env, char *str);
