@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:31:22 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/24 13:03:29 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/24 16:40:56 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	pipex_end(int **pipes, int *pids, int processes, t_data_pip *data)
 	int	j;
 	int	i;
 
+	(void)data;
 	j = 0;
 	while (j < processes - 1)
 	{

@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 17:09:10 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/23 17:11:27 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/24 16:33:54 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ t_exec	init_exec(char **env, char *str)
 		}
 		else
 		{
-			free_split((void **)data_e.cmd);
-			print_error("Error\nThis cmd is not in rep local !\n", 2);
+			data_e.path = NULL;
+			data_e.free = 0;
 		}
 	}
 	else

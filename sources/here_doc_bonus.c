@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:47:46 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/24 13:04:10 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/24 16:57:40 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*str_query(char *limiter)
 	limiter = ft_strjoin(limiter, "\n");
 	ft_printf("heredoc> ");
 	tmp = get_next_line(0);
-	while (ft_strncmp(tmp, limiter, ft_strlen(limiter)) != 0)
+	while (tmp && ft_strncmp(tmp, limiter, ft_strlen(limiter)) != 0)
 	{
 		tmp2 = result;
 		result = ft_strjoin(result, tmp);
@@ -97,12 +97,14 @@ int	heredoc(char *limiter, char **env, char **argv, int argc)
 	if (doc.pids == 0)
 	{
 		process_child(doc.pipes);
+		close(doc.fd);
 		doc.data_e = init_exec(env, argv[3]);
 		execve(doc.data_e.path, doc.data_e.cmd, env);
 		free_exec(doc.data_e);
 		print_error("Error\nCommand Exec failed !\n", 2);
 	}
 	process_parent(doc.pipes, doc.fd);
+	close(doc.fd);
 	doc.data_e = init_exec(env, argv[4]);
 	execve(doc.data_e.path, doc.data_e.cmd, env);
 	free_exec(doc.data_e);

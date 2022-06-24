@@ -6,7 +6,7 @@
 /*   By: genouf <genouf@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/12 17:51:56 by genouf            #+#    #+#             */
-/*   Updated: 2022/06/24 12:48:11 by genouf           ###   ########.fr       */
+/*   Updated: 2022/06/24 16:49:33 by genouf           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,16 @@ void	process_dup(t_data_fd data, int **pipes, int i, int processes)
 		check2 = dup2(pipes[i][1], STDOUT_FILENO);
 	if (check1 == -1 || check2 == -1)
 		print_error("Error\nDup failed !\n", 2);
-	if (i == 0)
-		check1 = close(data.file1);
-	else
+	if (i != 0)
 		check1 = close(pipes[i - 1][0]);
-	if (i == processes - 1)
-		check2 = close(data.file2);
-	else
-		check2 = close(pipes[i][1]);
-	if (check1 == -1 || check2 == -1)
+	if (i != processes - 1)
+		check1 = close(pipes[i][1]);
+	if (check1 == -1)
 		print_error("Error\nPipe close failed !\n", 2);
+	check1 = close(data.file1);
+	check1 = close(data.file2);
+	if (check1 == -1 || check2 == -1)
+		print_error("Error\nClose failed !\n", 2);
 }
 
 int	pipex(t_data_pip *data, char **env, int processes, char **argv)
